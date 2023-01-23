@@ -70,7 +70,9 @@ def Selenium():
     button = wait.until(expected_conditions.visibility_of_element_located((
         By.XPATH, '//button[@class="sign-in-form__submit-button"]')))
     button.click()
+    output_area.configure(state=NORMAL)
     output_area.insert(customtkinter.INSERT, 'Login successful!')
+    output_area.configure(state=DISABLED)
     sleep(5)
     ######################################################################################
 
@@ -81,7 +83,9 @@ def Selenium():
     search_button.send_keys(role_entry.get())
     sleep(1)
     search_button.send_keys(Keys.ENTER)
-    output_area.insert(customtkinter.INSERT, '\n\nInserting role to search...')
+    output_area.configure(state=NORMAL)
+    output_area.insert(customtkinter.INSERT, '\n\nTyping position to search...')
+    output_area.configure(state=DISABLED)
     sleep(4)
     ######################################################################################
 
@@ -91,7 +95,9 @@ def Selenium():
     ######################################################################################
     people_button = ww(driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//li[@class='search-reusables__primary-filter']/button[text()='Pessoas']")))    
     people_button.click()
-    output_area.insert(customtkinter.INSERT, '\n\nSearching people...')
+    output_area.configure(state=NORMAL)
+    output_area.insert(customtkinter.INSERT, '\n\nSearching contacts...')
+    output_area.configure(state=DISABLED)
     sleep(3)
     ######################################################################################
     
@@ -103,36 +109,51 @@ def Selenium():
         driver.execute_script('window.scrollTo(0, document.body.scrollTop);')
         sleep(5)
 
-        buttons_connect = ww(driver, 10).until(expected_conditions.visibility_of_all_elements_located((By.XPATH, "//*[text()='Conectar']"))) 
+        buttons_connect = driver.find_elements(By.XPATH, "//*[text()='Conectar']")
         sleep(3)
 
         for button in buttons_connect:        
             try:
                 button.click()
-                add_note = ww(driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//button[@aria-label='Adicionar nota']")))
+                sleep(2)
+                add_note = driver.find_element(By.XPATH, "//button[@aria-label='Adicionar nota']")
                 add_note.click()
                 sleep(2)
-                textarea = ww(driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//textarea[@id='custom-message']")))
+                textarea = driver.find_element(By.XPATH, "//textarea[@id='custom-message']")
                 textarea.send_keys(message.get("1.0","end-1c"))
                 sleep(2)
-                send_request = ww(driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//button[@aria-label='Enviar agora']")))
+                send_request = driver.find_element(By.XPATH, "//button[@aria-label='Enviar agora']")
+                sleep(1)
                 send_request.click()
+                output_area.configure(state=NORMAL)
                 output_area.insert(customtkinter.INSERT, '\n\nRequest sent!')
+                output_area.configure(state=DISABLED)
                 
                 sleep(10)
             except:
-                button_fechar = driver.find_element(By. XPATH, "//div[@class='artdeco-modal artdeco-modal--layer-default send-invite']/button")   
-                sleep(2)
-                button_fechar.click() 
+                driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                sleep(5)
+                next = driver.find_element(By.XPATH, "//li-icon[@type='chevron-right-icon']")
+                next.click()
+                output_area.configure(state=NORMAL)
+                output_area.insert(customtkinter.INSERT, '\n\nWe are in the next page now!')
+                output_area.configure(state=DISABLED)
+                sleep(5)
             
         try:
-            next = ww(driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//li-icon[@type='chevron-right-icon']")))
+            driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+            sleep(2)
+            next = driver.find_element(By.XPATH, "//li-icon[@type='chevron-right-icon']")
             next.click()
+            output_area.configure(state=NORMAL)
             output_area.insert(customtkinter.INSERT, '\n\nWe are in the next page now!')
+            output_area.configure(state=DISABLED)
             sleep(5)
             
         except:
+            output_area.configure(state=NORMAL)
             output_area.insert(customtkinter.INSERT, '\n\nWe reached the last page!')
+            output_area.configure(state=DISABLED)
             break    
         
 
@@ -184,7 +205,7 @@ password_entry = customtkinter.CTkEntry(master=frame_login_text, show='*', textv
 password_entry.place(x=270, y=35)
 
 role_text_value = StringVar()
-role_text = customtkinter.CTkLabel(master=frame_login_text, text='Role to search', font=('Microsoft YaHei UI',12,'bold'))
+role_text = customtkinter.CTkLabel(master=frame_login_text, text='Position to search', font=('Microsoft YaHei UI',12,'bold'))
 role_text.place(x=15,y=75)
 role_entry = customtkinter.CTkEntry(master=frame_login_text, textvariable=role_text_value, width=230, font=('Microsoft YaHei UI',12), border_width=1)
 role_entry.place(x=15, y=100)
@@ -204,8 +225,9 @@ frame_output.place(x=50, y=382)
 events_label = customtkinter.CTkLabel(master=mensagem_output, text='Events', font=('Microsoft YaHei UI',12,'bold'))
 events_label.place(x=15,y=155)
 
+
 output_area = customtkinter.CTkTextbox(master=frame_output, width=400, height=420, border_width=1)
-output_area.configure(state='disabled')
+output_area.configure(state=DISABLED)
 output_area.place(x=14)
 
 button_start = customtkinter.CTkButton(master=window, text='Start', cursor='hand2', command= open_selenium)
@@ -216,10 +238,3 @@ button_start.place(x=62, y=830)
 window.mainloop()
 ################################################################################################      
 
-
-
-
-
-
-
-#Olá, me chamo Alexsandro Passos, sou desenvolvedor Python, estou em busca de novas conexões e vi seu perfil e achei interessante, acredito que posso agregar em algo. Obrigado e bom dia!
