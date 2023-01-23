@@ -176,6 +176,7 @@ window = customtkinter.CTk()
 window.title("Linkedin automation")
 window.geometry('600x900+600+70')
 window.resizable(0, 0)
+window.after(201, lambda :window.iconbitmap('ico.ico'))
 ################################################################################################
 
 
