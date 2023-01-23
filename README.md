@@ -1,5 +1,5 @@
-# criador_conexoes_linkedin
-Crie conexões no linkedin de forma totalmente automatizada economizando horas e horas de trabalho manual
+# Linkedin Automation
+Create connections on linkedin in a fully automated way, saving hours and hours of manual work.
 
 # HOW TO USE
 1 - Type in your Linkedin email and password.
