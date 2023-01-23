@@ -205,6 +205,7 @@ events_label = customtkinter.CTkLabel(master=mensagem_output, text='Events', fon
 events_label.place(x=15,y=155)
 
 output_area = customtkinter.CTkTextbox(master=frame_output, width=400, height=420, border_width=1)
+output_area.configure(state='disabled')
 output_area.place(x=14)
 
 button_start = customtkinter.CTkButton(master=window, text='Start', cursor='hand2', command= open_selenium)
