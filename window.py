@@ -133,7 +133,8 @@ def Selenium():
             except:
                 driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
                 sleep(5)
-                next = driver.find_element(By.XPATH, "//li-icon[@type='chevron-right-icon']")
+                next = driver.find_element(By.XPATH, "//button[@aria-label='Avançar']")
+                sleep(2)
                 next.click()
                 output_area.configure(state=NORMAL)
                 output_area.insert(customtkinter.INSERT, '\n\nWe are in the next page now!')
@@ -142,8 +143,9 @@ def Selenium():
             
         try:
             driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+            sleep(5)
+            next = driver.find_element(By.XPATH, "//button[@aria-label='Avançar']")
             sleep(2)
-            next = driver.find_element(By.XPATH, "//li-icon[@type='chevron-right-icon']")
             next.click()
             output_area.configure(state=NORMAL)
             output_area.insert(customtkinter.INSERT, '\n\nWe are in the next page now!')
